@@ -1,0 +1,62 @@
+{
+    "settings": {
+        "number_of_shards": 4,
+        "number_of_replicas": 2,
+        "analysis": {
+            "filter": {
+                "autocomplete_filter": {
+                    "type": "edge_ngram",
+                    "min_gram": 1,
+                    "max_gram": 20
+                }
+            },
+            "analyzer": {
+                "autocomplete": {
+                    "type": "custom",
+                    "tokenizer": "standard",
+                    "filter": [
+                        "lowercase",
+                        "autocomplete_filter"
+                    ]
+                }
+            }
+        }
+    },
+
+
+    "mappings": {
+        "page": {
+            "properties": {
+                "created": {
+                    "type": "date",
+                    "format": "dd-MM-yyyy HH:mm:ss"
+                },
+                "Visits": {"type": "integer"},
+                "Saves": {"type": "integer"},
+                "Type": {"type": "keyword"},
+                "Title": {
+                    "type": "text",
+                    "analyzer": "autocomplete"
+                },
+                "Read": {"type": "keyword"},
+                "Content": {
+                    "type": "nested",
+                    "properties": {
+                        "Tags": {"type": "keyword"},
+                        "Description": {"type": "text"},
+                        "Color": {"type": "keyword"}
+                    }
+                },
+                "Author": {
+                    "type": "nested",
+                    "properties": {
+                        "displayName": {"type": "text"},
+                        "id": {"type": "keyword"},
+                        "photoURL": {"type": "text"}
+                    }
+                }
+
+            }
+        }
+    }
+}

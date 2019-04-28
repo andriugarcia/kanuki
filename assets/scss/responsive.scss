@@ -1,0 +1,57 @@
+
+    .wrap {
+      flex-wrap: wrap;
+    }
+    
+    @media(max-width: 960px) {
+
+      #subject, #page {
+        width: 100%;
+      }
+
+      #card {
+        width: 100%;
+      }
+
+      #rightbar {
+        width: 100%;
+      }
+
+      .desktop {
+        display: none;
+      }
+
+      .mobile {
+        display: inline;
+      }
+
+    }
+
+    @media(min-width: 960px) {
+      #subject, #page {
+        width: calc(100% - 320px);
+      }
+
+      .searchbtn {
+        display: none;
+      }
+
+      .desktop {
+        display: inline;
+      }
+
+      .mobile {
+        display: none;
+      }
+
+      #card {
+        max-width: 300px;
+        width: 100%;
+      }
+
+      #rightbar {
+        width: 300px;
+      }
+
+    }
+
