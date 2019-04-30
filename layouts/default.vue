@@ -114,7 +114,7 @@
 </template>
 
 <script>
-  import Card from '@/components/Card.vue'
+  import Card from '@/components/card.vue'
   import searchbar from '@/components/Searchbar.vue'
   import CreateSubject from '@/components/createSubject.vue'
   import notifications from '@/components/notifications.vue'

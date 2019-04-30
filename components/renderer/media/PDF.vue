@@ -2,7 +2,7 @@
     #PDFRenderer
         div
             //- vue-friendly-iframe.frame(v-if="content.Src", :src="source")
-            object(v-if="content.Src").frame(:data="content.Src", type="application/pdf", width="100%", height="100%")
+            object.frame(v-if="content.Src", :data="content.Src", type="application/pdf", width="100%", height="100%")
                 p El PDF no ha cargado correctamente, click <a :href="content.Src">AQUI</a> para abrir
         div(v-if="edit")
             v-layout.pa-3(justify-space-between, align-center)

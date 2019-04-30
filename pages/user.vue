@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import Card from '@/components/Card.vue'
+import Card from '@/components/card.vue'
 import format from '@/format'
 
 export default {

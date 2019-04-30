@@ -94,7 +94,7 @@
 
 <script>
 
-import Rightbar from '@/components/Rightbar.vue'
+import Rightbar from '@/components/rightbar.vue'
 import CreatePage from '@/components/createPage.vue'
 import shareButton from '@/components/shareButton.vue'
 import subjectSettings from '@/components/subjectSettings.vue'

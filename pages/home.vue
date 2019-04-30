@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Card from '@/components/Card.vue'
+import Card from '@/components/card.vue'
 import NoSSR from 'vue-no-ssr'
 
 export default {
