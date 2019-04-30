@@ -32,10 +32,36 @@ module.exports = {
     { src: '@/plugins/vue-draggable', ssr: false }
   ],
 
+  "presets": ['es2015', 'stage-0',
+    "@babel/env",
+    {
+      targets: {
+        "browsers": "> 5%"
+      },
+      useBuiltIns: "usage",
+    },
+  ],
+  extractCSS: {
+      allChunks: true
+    },
+
+    "html.minify": {
+      collapseBooleanAttributes: true,
+      decodeEntities: true,
+      minifyCSS: true,
+      minifyJS: true,
+      processConditionalComments: true,
+      removeEmptyAttributes: true,
+      removeRedundantAttributes: true,
+      trimCustomFragments: true,
+      useShortDoctype: true
+    },
+
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/router',
     '@nuxtjs/pwa',
+    'nuxt-babel',
     ['@nuxtjs/vuetify', {
       materialIcons: true,
       theme: {
