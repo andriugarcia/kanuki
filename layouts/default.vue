@@ -74,7 +74,7 @@
           v-card-title.ps.subheading {{ this.$t("login") }}
           v-btn(light, block, @click="auth()")
             v-avatar(size=32)
-              img(src="../assets/images/GoogleLogo.png")
+              img(src="../assets/images/googleLogo.png")
             div {{ this.$t("loginGoogle") }}
         v-card.pa-2.mt-3(color="green", flat)
           v-card-title.ps.subheading {{ $t("signup") }}
@@ -83,7 +83,7 @@
             div El nombre de usuario ya existe
           v-btn(light, block, @click="register()")
             v-avatar(size=32)
-              img(src="../assets/images/GoogleLogo.png")
+              img(src="../assets/images/googleLogo.png")
             div {{ this.$t("signupGoogle") }}
 
     div(v-if="$vuetify.breakpoint.mdAndUp", style="margin-bottom: 48px")
@@ -115,7 +115,7 @@
 
 <script>
   import Card from '@/components/card.vue'
-  import searchbar from '@/components/Searchbar.vue'
+  import searchbar from '@/components/searchbar.vue'
   import CreateSubject from '@/components/createSubject.vue'
   import notifications from '@/components/notifications.vue'
   import format from '@/format'
