@@ -14,19 +14,22 @@
       searchbar(:user="user")
 
     div(v-else)
-      v-bottom-nav(v-if="!$store.state.searchBar", :active.sync="bottomNav", style="position: fixed; bottom: 60px; z-index: 16", color="white")
-        v-btn(flat, value="sidebar", color="blue", @click="drawer = !drawer")
-          v-icon dehaze 
-        v-btn(flat, value="home", @click="goToRoot")
-          v-avatar(size="28px")
-            img.pointer(src="../assets/images/KanukiLogo.png")
-        v-btn(flat, value="search", @click="$store.commit('searchBarActivate')")
-          v-icon search
-        v-btn(value="profile", flat, small, fab)
-          v-avatar(size="24px")
-            img(v-if="user.id", :src="user.photoURL", style="border-radius: 50%;")
-      searchbar(v-if="$store.state.searchBar", :user="user", style="z-index: 16;")
-      notifications(v-if="notificationsMobile", :user="user", style="position: absolute; z-index: 15; width: 94%; margin: 12px;")
+      v-card(v-if="!$store.state.search.searchBar", style="position: fixed; bottom: 0; z-index: 16; width: 100%")
+        v-layout.px-3(justify-space-around)
+          v-btn(fab, flat, :color="drawer ? 'blue' : 'black'", @click="drawer = !drawer")
+            v-icon dehaze 
+          create-subject(v-if="user.id")
+          v-btn(fab, flat, @click="goToRoot")
+            v-avatar(size="28px")
+              img.pointer(src="../assets/images/KanukiLogo.png")
+          v-btn(fab, flat, @click="searchBarActivate")
+            v-icon search
+          v-btn(fab, flat, @click="switchNotifications")
+            v-avatar(size="24px")
+              img(v-if="user.id", :src="user.photoURL", style="border-radius: 50%;")
+              v-icon(v-else, size=20) far fa-user
+      searchbar(v-else, :user="user", style="z-index: 16;")
+      notifications(v-if="notificationsMobile", :user="user", style="position: fixed; z-index: 15; width: 100%; top: 0; height: 90%").ma-2
     v-navigation-drawer#sidebar(:clipped="true", v-model="drawer", fixed, dark, app)
       div(v-if="$vuetify.breakpoint.mdAndUp", style="margin-bottom: 60px")
       div(v-if="user.id")
@@ -87,7 +90,7 @@
             div {{ this.$t("signupGoogle") }}
 
     div(v-if="$vuetify.breakpoint.mdAndUp", style="margin-bottom: 48px")
-    v-content
+    v-content(:style="notificationsMobile ? '-webkit-filter: blur(5px); -moz-filter: blur(5px); -o-filter: blur(5px); -ms-filter: blur(5px); filter: blur(5px);' : ''")
       v-alert.mt-0(:value="errorAlert", type="error") {{ errorAlert }}
       v-container(fluid)
         v-slide-y-transition(mode="out-in")
@@ -109,7 +112,6 @@
           .ps.white--text(style="font-size: 3em") Error
           .headline.ps.white--text Ya existe una página con este nombre
     create-subject(v-if="drawer && user.id", style="z-index: 15")
-
 
 </template>
 
@@ -229,6 +231,10 @@
 
       },
 
+      searchBarActivate() {
+        this.$store.commit('search/searchBarActivate')
+      },
+
       // Permite mostrar ocultar los submenús
       publicationsToggle() {
         this.publications = !this.publications
@@ -238,6 +244,15 @@
       },
       contributionsToggle() {
         this.contributions = !this.contributions
+      },
+
+      switchNotifications() {
+        if (!this.user.id) {
+          this.drawer = true
+        }
+        else {
+          this.notificationsMobile = !this.notificationsMobile
+        }
       },
 
       

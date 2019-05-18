@@ -10,7 +10,6 @@ import {getQuery} from '@/tools'
 export default {
     data() {
         return {
-            edit: false,
             link: ''
         }
     },
@@ -21,9 +20,9 @@ export default {
         }
     },
 
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     },
 

@@ -10,9 +10,10 @@
 import {getQuery} from '@/tools'
 
 export default {
-    data() {
-        return {
-            edit: false
+
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     },
 
@@ -20,11 +21,6 @@ export default {
         "content"
     ],
 
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
-        }
-    }
 }
 </script>
 

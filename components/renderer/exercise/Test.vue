@@ -26,7 +26,6 @@ export default {
 
     data() {
         return {
-            edit: false,
             rerender: 1
         }
     },
@@ -35,12 +34,14 @@ export default {
         "content"
     ],
 
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
+        }
+    },
+
     mounted() {
 
-        
-        if (getQuery('edit') == 'true') {
-            this.edit = true
-        }
         const answers = this.content.Answers
         if (!this.content.Answers) return
         

@@ -2,7 +2,7 @@ var elasticsearch = require('elasticsearch');
 
 
 var client = new elasticsearch.Client({
-  host: "https://search-elastic-kanuki-2px237t6x4thrwgsihbclotrca.eu-west-1.es.amazonaws.com/",
+  host: "https://exnydh4945:7oq2rx1vg3@beech-51051932.eu-west-1.bonsaisearch.net",
 });
 
 client.ping({

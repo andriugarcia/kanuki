@@ -5,7 +5,7 @@
                 v-card.pa-2.elevation-5(style="height: 100%")
                     p.font-weight-bold(style="text-align: center") Aliados Clave
                     .ma-3(v-if="!edit", style="font-size: .8em") {{ content.keyPartners }}
-                    v-textarea(v-else, style="font-size: .8em", v-model="content.strengths", single-line, auto-grow)
+                    v-textarea(v-else, style="font-size: .8em", v-model="content.keyPartners", single-line, auto-grow)
             div(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 18%' : 'width: 100%'")
                 v-flex.ma-1
                     v-card.pa-2.elevation-5(style="height: 100%")
@@ -56,19 +56,14 @@
 import {getQuery} from '@/tools'
 
 export default {
-    data() {
-        return {
-            edit: false
-        }
-    },
 
     props: [
         "content"
     ],
 
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     }
 }

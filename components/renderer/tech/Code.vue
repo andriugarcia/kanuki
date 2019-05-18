@@ -30,15 +30,9 @@ export default {
         PrismEditor
     },
 
-    data () {
-        return {
-            edit: false,
-        }
-    },
-
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     },
 

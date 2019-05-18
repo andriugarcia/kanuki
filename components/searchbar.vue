@@ -27,28 +27,27 @@
               v-avatar(size="32px")
                 img(v-if="user.id", :src="user.photoURL", style="border-radius: 50%;")
             notifications(v-if="user", :user="user")
-    div(v-else)
-      v-dialog(v-model="alwaysTrue", color="white", fullscreen)
-        v-list(v-if="queryResults.length || publications.length || saved.length || contributions.length", style="position: absolute; bottom: 56px; width: 100%")
-            v-subheader.ps(v-if="publications.length") Publicaciones
-            v-list-tile(v-for="publication in publications", :key="publication.id", @click="goToSubject(publication)")
-                v-list-tile-title {{ publication.Title }}
-                v-list-tile-sub-title {{ publication.AuthorName }}
-            v-subheader.ps(v-if="saved.length") Guardados
-            v-list-tile(v-for="save in saved", :key="save.id", @click="goToSubject(save)")
-                v-list-tile-title {{ save.Title }}
-                v-list-tile-sub-title {{ save.AuthorName }}
-            v-subheader.ps(v-if="contributions.length") Contribuciones
-            v-list-tile(v-for="contribution in contributions", :key="contribution.id", @click="goToSubject(contribution)")
-                v-list-tile-title {{ contribution.Title }}
-                v-list-tile-sub-title {{ contribution.AuthorName }}
-            v-subheader.ps(v-if="queryResults.length") Busqueda Rápida
-            //- div.grey--text(v-if="!queryResults.length").pa-3 No se ha encontrado ninguna materia
-            v-list-tile(v-for="query in queryResults", :key="query._source.id", @click="goToElasticSubject(query._source)")
-                v-list-tile-title {{ query._source.Title }}
-                v-list-tile-sub-title {{ query._source.Author.displayName }}
-        v-toolbar(style="position: fixed; bottom: 0px", color="white")
-          v-text-field#focusElement(@blur="$store.commit('searchBarDisable')", v-model="searchText", flat, solo, @keydown.enter.prevent="goToSearch", hide-details, prepend-inner-icon="search", :label="$t('search')", color="primary")
+    v-card(v-else, style="z-index: 50; position: fixed; bottom: 0px; width: 100%",)
+      #handler(style="position: fixed; width: 100%; top: 0; bottom: 0; background-color: transparent", @click="disableSearchBar")
+      v-list(v-if="queryResults.length || publications.length || saved.length || contributions.length")
+          v-subheader.ps(v-if="publications.length") Publicaciones
+          v-list-tile(v-for="(publication, index) in publications", :key="index", @click="goToSubject(publication)")
+              v-list-tile-title {{ publication.Title }}
+              v-list-tile-sub-title {{ publication.AuthorName }}
+          v-subheader.ps(v-if="saved.length") Guardados
+          v-list-tile(v-for="save in saved", :key="save.id", @click="goToSubject(save)")
+              v-list-tile-title {{ save.Title }}
+              v-list-tile-sub-title {{ save.AuthorName }}
+          v-subheader.ps(v-if="contributions.length") Contribuciones
+          v-list-tile(v-for="contribution in contributions", :key="contribution.id", @click="goToSubject(contribution)")
+              v-list-tile-title {{ contribution.Title }}
+              v-list-tile-sub-title {{ contribution.AuthorName }}
+          v-subheader.ps(v-if="queryResults.length") Busqueda Rápida
+          //- div.grey--text(v-if="!queryResults.length").pa-3 No se ha encontrado ninguna materia
+          v-list-tile(v-for="query in queryResults", :key="query._source.id", @click="goToElasticSubject(query._source)")
+              v-list-tile-title {{ query._source.Title }}
+              v-list-tile-sub-title {{ query._source.Author.displayName }}
+      v-text-field(v-model="searchText", autofocus, flat, solo, @keydown.enter.prevent="goToSearch", hide-details, prepend-inner-icon="search", :label="$t('search')", color="primary")
       
 </template>
 
@@ -81,11 +80,6 @@ export default {
       }
     },
 
-    mounted() {
-      if (!this.$vuetify.breakpoint.mdAndUp)
-        document.getElementById("focusElement").focus();
-    },
-
     methods: {
 
         goToSubject(subject) {
@@ -103,6 +97,11 @@ export default {
               this.searchText = ''
             }
         },
+
+        disableSearchBar() {
+          console.log("Disable")
+          this.$store.commit('search/searchBarDisable')
+        }
 
     },
 

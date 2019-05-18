@@ -10,7 +10,6 @@ import elements from '@/components/elements.vue'
 export default {
     data() {
         return {
-            edit: false,
             dragging: false,
         }
     },
@@ -23,9 +22,9 @@ export default {
         "content", "admin"
     ],
 
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     }
 }

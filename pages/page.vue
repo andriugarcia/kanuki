@@ -44,7 +44,7 @@
                         v-icon arrow_forward
                     v-btn(icon, slot="extension", @click="goToFather")
                         v-icon arrow_back
-                    v-toolbar-title.ml-2(v-if="!edit", slot="extension").ps {{ page.Title }}
+                    v-toolbar-title.ml-2(v-if="!$store.state.page.edit", slot="extension").ps {{ page.Title }}
                     v-text-field(v-else, slot="extension", v-model="page.Title", hide-details, color="black").ps
                     v-spacer(slot="extension")
                     share-button(slot="extension")
@@ -63,17 +63,17 @@
                                     v-btn(color="error", @click="deletePage") {{ $t("delete") }}
                         span {{ $t('deleteSubject') }}
 
-                v-toolbar(flat)
+                v-toolbar(flat, style="z-index: 50")
                     v-btn(v-if="page.Author.id", flat, light, small, @click="goToAuthor")
                         v-avatar.mr-1(size="28")
                             img(:src="page.Author.photoURL")
                         div {{ page.Author.displayName }}
                     div {{ father.id }} / {{ page.id }}
                     v-spacer
-                    //- v-btn(v-if="page.Type == 'section' && deleteElementList.length != 0", @click="deleteElements", icon, flat)
+                    v-btn(v-if="page.Type == 'section' && deleteElementList.length != 0", @click="deleteElements", icon, flat)
                         v-icon delete
                     create-page(v-if="page.Type == 'section'")
-                    v-fab-transition(v-if="!edit")
+                    v-fab-transition(v-if="!$store.state.page.edit")
                         v-btn(v-show="page.id && admin", @click="goToEdit", color="green darken-1", dark, small, absolute, bottom, right, fab)
                             v-icon edit
                     v-fab-transition(v-else)
@@ -91,12 +91,17 @@
                 documents-doc-renderer(v-else-if="page.Type == 'documents/doc'", :content="page.Content")
                 //- exercise-card-renderer(v-else-if="page.Type == 'exercise/card'", :content="page.Content")
                 exercise-test-renderer(v-else-if="page.Type == 'exercise/test'", :content="page.Content")
+                exercise-form-renderer(v-else-if="page.Type == 'exercise/form'", @updatepage="saveEvent", :content="page.Content", :admin="admin")
                 //- exercise-write-renderer(v-else-if="page.Type == 'exercise/write'", :content="page.Content")
                 //- tech-code-renderer(v-else-if="page.Type == 'tech/code'", :content="page.Content")
                 //- tech-math-renderer(v-else-if="page.Type == 'tech/math'", :content="page.Content")
-                //- tech-linechart-renderer(v-else-if="page.Type == 'tech/linechart'", :content="page.Content")
-                //- business-dafo-renderer(v-else-if="page.Type == 'business/dafo'", :content="page.Content")
-                //- business-bmc-renderer(v-else-if="page.Type == 'business/bmc'", :content="page.Content")
+                tech-linechart-renderer(v-else-if="page.Type == 'tech/linechart'", :content="page.Content")
+                tech-barchart-renderer(v-else-if="page.Type == 'tech/barchart'", :content="page.Content")
+                tech-doughnut-renderer(v-else-if="page.Type == 'tech/doughnut'", :content="page.Content")
+                tech-polar-area-renderer(v-else-if="page.Type == 'tech/polararea'", :content="page.Content")
+                business-dafo-renderer(v-else-if="page.Type == 'business/dafo'", :content="page.Content")
+                business-bmc-renderer(v-else-if="page.Type == 'business/bmc'", :content="page.Content")
+                business-tam-renderer(v-else-if="page.Type == 'business/tam'", :content="page.Content")
                 v-toolbar(color="white",flat, light)
                     v-btn(outline, fab, small, :disabled="leftDisabled", @click="goBack")
                         v-icon arrow_back
@@ -172,11 +177,16 @@ import DocumentsPresentationRenderer from '@/components/renderer/documents/Prese
 import ExerciseCardRenderer from '@/components/renderer/exercise/Card.vue'
 import ExerciseTestRenderer from '@/components/renderer/exercise/Test.vue'
 import ExerciseWriteRenderer from '@/components/renderer/exercise/Write.vue'
+import ExerciseFormRenderer from '@/components/renderer/exercise/Form.vue'
 // import TechCodeRenderer from '@/components/renderer/tech/Code.vue'
 import TechMathRenderer from '@/components/renderer/tech/Math.vue'
 import TechLinechartRenderer from '@/components/renderer/tech/LineChart.vue'
+import TechBarchartRenderer from '@/components/renderer/tech/BarChart.vue'
+import TechDoughnutRenderer from '@/components/renderer/tech/Doughnut.vue'
+import TechPolarAreaRenderer from '@/components/renderer/tech/PolarArea.vue'
 import BusinessDafoRenderer from '@/components/renderer/business/Dafo.vue'
 import BusinessBmcRenderer from '@/components/renderer/business/Bmc.vue'
+import BusinessTamRenderer from '@/components/renderer/business/Tam.vue'
 
 import elements from '@/components/elements.vue'
 
@@ -205,11 +215,16 @@ export default {
         ExerciseCardRenderer,
         ExerciseTestRenderer,
         ExerciseWriteRenderer,
+        ExerciseFormRenderer,
         // TechCodeRenderer,
         TechMathRenderer,
         TechLinechartRenderer,
+        TechBarchartRenderer,
+        TechDoughnutRenderer,
+        TechPolarAreaRenderer,
         BusinessDafoRenderer,
         BusinessBmcRenderer,
+        BusinessTamRenderer,
     },
 
     data() {
@@ -219,7 +234,6 @@ export default {
             father: {},
             page: {},
             admin: false,
-            edit: false,
             comments: true,
             dragging: false,
             deleteDialog: false,
@@ -258,6 +272,13 @@ export default {
 
     async asyncData({store, params}) {
         let path = `${params.user}/${params.pathMatch}`
+        
+        for (let i = 1; i < path.length; i++) {
+            if (path[i] == '/' && path[i] == path[i-1]) {
+                path = path.slice(0, i) + path.slice(i+1)
+                break;
+            }
+        }
 
         if (path[path.length - 1] == '/') {
             path = path.substr(0, path.length - 1)
@@ -271,6 +292,8 @@ export default {
         var rightDisabled
         var backId
         var nextId
+
+        console.log(data.page)
 
         if (data.page.Type != 'subject') {
             
@@ -310,7 +333,10 @@ export default {
 
     mounted() {
         if (getQuery('edit') == 'true') {
-            this.edit = true
+            this.$store.commit('page/setEditTrue')
+        }
+        else {
+            this.$store.commit('page/setEditFalse')
         }
     },
 
@@ -363,6 +389,14 @@ export default {
     },
 
     beforeRouteUpdate (to, from, next) {
+        
+        if (to.query.edit == 'true') {
+            this.$store.commit('page/setEditTrue')
+        }
+        else {
+            this.$store.commit('page/setEditFalse')
+        }
+
         this.rerender += 1
         next()
     },
@@ -379,6 +413,8 @@ export default {
             }
 
             //Vuelve a obtener la pagina en snapshot
+            if (this.page.Type == 'notFound') return
+
             db.collection('pages').doc(id.replace(/\//g, "."))
                 .onSnapshot(function(doc) {
                     self.page = doc.data()
@@ -428,10 +464,8 @@ export default {
             }
             else {
                 await this.$store.dispatch('page/deleteElements', {
-                    idFather: this.father.url.replace(new RegExp('/', 'g'), '.'),
-                    elements: this.father.Content.Elements,
+                    idFather: this.page.url.replace(new RegExp('/', 'g'), '.'),
                     arrayIndex: this.$store.state.page.deleteElementList,
-                    deleteAll: false
                 })
             }
 
@@ -444,7 +478,7 @@ export default {
             window.history.pushState({path:newurl},'',newurl);
 
             this.rerender += 1
-            this.edit = true
+            this.$store.commit('page/setEditTrue')
         },
 
         save() {
@@ -458,7 +492,7 @@ export default {
                 var newurl = `/${id}`;
                 this.$router.replace({path: newurl})
                 this.rerender += 1
-                this.edit = false
+                this.$store.commit('page/setEditFalse')
             })
 
 
@@ -482,6 +516,17 @@ export default {
                     }
                 })
             }
+
+        },
+
+        saveEvent() {
+            const page = this.page
+            page.id = format(page.Title)
+
+            this.$store.dispatch('page/updatePage', {
+                idFather: this.father.url.replace(new RegExp('/', 'g'), '.'),
+                page
+            })
 
         },
 

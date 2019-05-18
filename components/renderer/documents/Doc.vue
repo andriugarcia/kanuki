@@ -23,15 +23,14 @@ export default {
     data() {
         return {
             source: 'https://view.officeapps.live.com/op/embed.aspx?src='+ this.content.Src,
-            edit: false,
             file: [],
             uploading: false
         }
     },
     
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     },
 

@@ -21,15 +21,14 @@ import storage from '@/storage'
 export default {
     data() {
         return {
-            edit: false,
             modal: false,
             uploading: false,
         }
     },
 
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     },
 

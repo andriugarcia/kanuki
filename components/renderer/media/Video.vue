@@ -24,16 +24,15 @@ export default {
 
     data() {
         return {
-            edit: false,
             file: [],
             uploading: false,
             progress: 0
         }
     },
 
-    mounted() {
-        if (getQuery('edit') == 'true') {
-            this.edit = true
+    computed: {
+        edit() {
+            return this.$store.state.page.edit
         }
     },
 

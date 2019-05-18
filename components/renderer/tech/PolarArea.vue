@@ -1,6 +1,6 @@
 <template lang="pug">
   #linechart.pa-3
-    linechart(v-if="this.content.Labels", :chartData="{labels: this.content.Labels, datasets: [{label: this.content.Label, backgroundColor: this.content.Color + '90', borderColor: this.content.Color, data: this.content.Data}]}")
+    polar-area(v-if="this.content.Labels", :chartData="{labels: this.content.Labels, datasets: [{label: this.content.Label, backgroundColor: this.colors, data: this.content.Data}]}")
     div(v-if="edit")
       v-subheader Configuración de la gráfica
       v-text-field.mx-3(v-model="content.Label", label="Título")
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import linechart from '@/components/linechart.vue'
+import PolarArea from '@/components/PolarArea.vue'
 import {getQuery} from '@/tools'
 
 export default {
@@ -29,7 +29,7 @@ export default {
 
   data() {
     return {
-
+      colors: ["#ff6384", "#36a2eb", "#ffcd56"],
       headers: [
         {
           text: 'Nombres',
@@ -113,7 +113,7 @@ export default {
   },
 
   components: {
-    linechart
+    PolarArea
   },
 
 }

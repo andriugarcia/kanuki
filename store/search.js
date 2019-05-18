@@ -7,10 +7,17 @@ const searchModule = {
         search: [],
         homePosts: [],
         rightbar: [],
+        searchBar: false,
       }
     },
 
     mutations: {
+        searchBarActivate: (state) => {
+            state.searchBar = true
+          },
+          searchBarDisable: (state) => {
+            state.searchBar = false
+          },
         setAutocomplete(state, data) {
             state.autocomplete = data
         },

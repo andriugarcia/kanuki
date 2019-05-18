@@ -162,8 +162,11 @@
                 Title: 'Test',
                 Subtitle: 'Ejercicios de tipo Test',
                 Type: 'exercise/test',
-                Color: 'green darken-1',
-                Image: 'https://firebasestorage.googleapis.com/v0/b/kanuki-app.appspot.com/o/Test.svg?alt=media&token=a164172b-130c-4084-a044-7fb5978a9767'
+            },
+            {
+                Title: 'Formulario',
+                Subtitle: 'Haz encuestas a tiempo real',
+                Type: 'exercise/form',
             },
             // {
             //     Title: this.$t('write'),
@@ -179,13 +182,26 @@
             //     Color: 'blue darken-1',
             //     Image: 'https://firebasestorage.googleapis.com/v0/b/kanuki-app.appspot.com/o/Code.svg?alt=media&token=eb58f33c-7480-493e-802b-7467fedcecbd'
             // },
-            // {
-            //     Title: this.$t('graph'),
-            //     Subtitle: this.$t('graphSubtitle'),
-            //     Type: 'tech/linechart',
-            //     Color: 'blue darken-1',
-            //     Image: 'https://firebasestorage.googleapis.com/v0/b/kanuki-app.appspot.com/o/Graph.svg?alt=media&token=04ea69af-6128-496f-a67f-3cf99f417e09'
-            // },
+            {
+                Title: "Line Chart",
+                Subtitle: "Graph description",
+                Type: 'tech/linechart',
+            },
+            {
+                Title: "Bar Chart",
+                Subtitle: "Graph description",
+                Type: 'tech/barchart',
+            },
+            {
+                Title: "Doughnut Chart",
+                Subtitle: "Graph description",
+                Type: 'tech/doughnut',
+            },
+            {
+                Title: "Polar Area Chart",
+                Subtitle: "Graph description",
+                Type: 'tech/polararea',
+            },
             {
                 Title: "Business Model Canvas",
                 Subtitle: "Plantilla de BMC",
@@ -195,6 +211,11 @@
                 Title: "DAFO",
                 Subtitle: "Plantilla de DAFO",
                 Type: 'business/dafo',
+            },
+            {
+                Title: "Tamaño de mercado",
+                Subtitle: "Análisis de TAM SAM SOM",
+                Type: 'business/tam',
             },
             // {
             //     Title: "Votación",
@@ -317,7 +338,7 @@
                 Type: type
             }).then(i => {
                 this.dialog = false
-                this.$router.push({path: `${window.location.pathname}/nuevo_${i}?edit=true`})
+                this.$router.replace({path: `${window.location.pathname}/nuevo_${i}`, query: { edit: 'true' }})
             })
         },
 

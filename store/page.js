@@ -9,6 +9,7 @@ const page = {
             oldTitle: "",
             deleteElementList: [],
             pageParam: {},
+            edit: false,
             subjectParam: {},
             father: {}
         }
@@ -17,6 +18,14 @@ const page = {
     mutations: {
         SetPageParamRead(state, data) {
             state.pageParam.Read = data
+        },
+
+        setEditFalse(state) {
+            state.edit = false
+        },
+
+        setEditTrue(state) {
+            state.edit = true
         },
 
         setPage(state, data) {
@@ -64,11 +73,25 @@ const page = {
 
             //array: [user, subject, page1, page2]
             
-            const id = path.replace(new RegExp('/', 'g'), '.');            
+            var id = path.replace(new RegExp('/', 'g'), '.');  
+            id = (id[id.length - 1] == '.') ? id.substr(0, id.length - 1) : id
             //id: user.subject.page1.page2
             
             page = await get('pages', id)
-            page = page.data()
+
+            if (!page.exists) {
+                page = {
+                    Title: "No encontrado",
+                    Type: "NotFound",
+                    id,
+                    Content: {
+                        Description: "La materia que has buscado no existe o es privada"
+                    }
+                }
+            }
+
+            else {page = page.data()}
+
             if (page.Type == 'subject') {
                 subject = page
                 father = {}
@@ -87,7 +110,10 @@ const page = {
                 }
     
             }
-            
+
+            context.commit('setOldTitle', page.Title)
+        
+
             let ret = {
                 subject, father, page
             }
@@ -125,13 +151,12 @@ const page = {
         sendComment: (context, value) => {
             unshift('pages', value.id, 'Comments', value.Comment)
         },
-
+        
         updatePage: (context, value) => {
             console.log(value.authorId)
             var oldTitle = context.state.oldTitle
 
-            console.log("OLDTITLE", oldTitle)
-            console.log("TITLE", value.page.Title)
+
             if (oldTitle != value.page.Title) {
                 context.dispatch("deleteElements", {
                     arrayIndex: [format(oldTitle)],
@@ -252,7 +277,6 @@ const page = {
             var title = 'Nuevo '
             var id = 'nuevo_'
             var user = context.rootState.user.user
-
             while (await checkTitle('pages', `${value.id}.${id}${i}`)) {
                 i += 1
             }
@@ -292,6 +316,7 @@ const page = {
 
         deleteElements: async function(context, value) {
 
+            console.log(value.idFather)
             return await value.arrayIndex.forEach(async function(id) {
                 await remove('pages', `${value.idFather}.${id}`)
                 await pull('pages', value.idFather, 'Elements', id)

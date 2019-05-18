@@ -86,10 +86,18 @@ let socialShare = function(option) {
             return 'fas fa-file-alt'
         } else if (value == 'exercise/write') {
             return 'fas fa-pen-square'
+        } else if (value == 'exercise/form') {
+            return 'fas fa-check-square'
         } else if (value == 'tech/code') {
             return 'fas fa-code'
         } else if (value == 'tech/linechart') {
+            return 'fas fa-chart-area'
+        } else if (value == 'tech/barchart') {
             return 'fas fa-chart-bar'
+        } else if (value == 'tech/doughnut') {
+            return 'fas fa-chart-pie'
+        } else if (value == 'tech/polararea') {
+            return 'fas fa-chart-pie'
         } else if (value == 'tech/math') {
             return 'fas fa-superscript'
         } else if (value == 'game/vs') {
@@ -104,6 +112,8 @@ let socialShare = function(option) {
             return 'fas fa-poll-h'
         } else if (value == 'business/lc') {
             return 'fas fa-feather-alt'
+        } else if (value == 'business/tam') {
+            return 'fas fa-filter'
         } else if (value == 'business/cv') {
             return 'fas fa-id-badge'
         } else if (value == 'graph/line') {

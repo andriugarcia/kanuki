@@ -25,17 +25,7 @@ export function createStore() {
         },
 
         state: {
-          downloaded: false,
-          searchBar: false,
-        },
-
-        mutations: {
-          searchBarActivate: (state) => {
-            state.searchBar = true
-          },
-          searchBarDisable: (state) => {
-            state.searchBar = false
-          },
+          downloaded: false
         }
 })
 }

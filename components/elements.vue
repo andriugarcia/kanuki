@@ -27,6 +27,12 @@ import { getIcon } from '@/tools'
 
 export default {
 
+    data() {
+        return {
+            elementsList: []
+        }
+    },
+
     beforeMount() {
         this.elementsList = [...this.elements]
     }, 

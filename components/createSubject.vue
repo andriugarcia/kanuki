@@ -1,7 +1,9 @@
 <template lang="pug">
     v-bottom-sheet(v-model="dialog", @click="addSubject")
-      v-btn.floatingAdd(style="margin-left: 32px", slot="activator", dark, color="blue", round, fixed, bottom, large, left)
+      v-btn.floatingAdd(v-if="$vuetify.breakpoint.mdAndUp", style="margin-left: 32px", slot="activator", dark, color="blue", round, fixed, bottom, large, left)
         .ps Crear materia
+      v-btn(v-else, slot="activator", flat, fab)
+        v-icon add
       v-card
         v-list
             v-layout.mx-2(justify-space-between, align-center)
