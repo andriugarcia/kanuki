@@ -6,8 +6,6 @@
 
 <script>
 
-import {getQuery} from '@/tools'
-
 export default {
     props: [
         "content"

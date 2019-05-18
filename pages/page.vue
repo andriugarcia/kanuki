@@ -102,6 +102,7 @@
                 business-dafo-renderer(v-else-if="page.Type == 'business/dafo'", :content="page.Content")
                 business-bmc-renderer(v-else-if="page.Type == 'business/bmc'", :content="page.Content")
                 business-tam-renderer(v-else-if="page.Type == 'business/tam'", :content="page.Content")
+                business-cv-renderer(v-else-if="page.Type == 'business/cv'", :content="page.Content")
                 v-toolbar(color="white",flat, light)
                     v-btn(outline, fab, small, :disabled="leftDisabled", @click="goBack")
                         v-icon arrow_back
@@ -187,6 +188,7 @@ import TechPolarAreaRenderer from '@/components/renderer/tech/PolarArea.vue'
 import BusinessDafoRenderer from '@/components/renderer/business/Dafo.vue'
 import BusinessBmcRenderer from '@/components/renderer/business/Bmc.vue'
 import BusinessTamRenderer from '@/components/renderer/business/Tam.vue'
+import BusinessCvRenderer from '@/components/renderer/business/Cv.vue'
 
 import elements from '@/components/elements.vue'
 
@@ -225,6 +227,7 @@ export default {
         BusinessDafoRenderer,
         BusinessBmcRenderer,
         BusinessTamRenderer,
+        BusinessCvRenderer,
     },
 
     data() {

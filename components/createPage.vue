@@ -234,11 +234,11 @@
             //     Subtitle: "Crea tu propio Lean Canvas",
             //     Type: 'business/lc'
             // },
-            // {
-            //     Title: "Curriculum Vitae",
-            //     Subtitle: "Crea una tarjeta con información profesional",
-            //     Type: 'business/cv'
-            // },
+            {
+                Title: "Curriculum Vitae",
+                Subtitle: "Crea una tarjeta con información profesional",
+                Type: 'business/cv'
+            },
             // {
             //     Title: "Gráfica de líneas",
             //     Subtitle: "Crea una gráfica con líneas",
