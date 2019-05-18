@@ -63,7 +63,7 @@
                                     v-btn(color="error", @click="deletePage") {{ $t("delete") }}
                         span {{ $t('deleteSubject') }}
 
-                v-toolbar(flat, style="z-index: 50")
+                v-toolbar(flat, style="z-index: 5")
                     v-btn(v-if="page.Author.id", flat, light, small, @click="goToAuthor")
                         v-avatar.mr-1(size="28")
                             img(:src="page.Author.photoURL")
@@ -447,6 +447,7 @@ export default {
         },
 
         async deletePage() {
+            console.log("DELETING SUBJECT")
             await this.$store.dispatch('page/deleteElements', {
                 idFather: this.father.url.replace(new RegExp('/', 'g'), '.'),
                 arrayIndex: [this.page.id],

@@ -16,7 +16,7 @@
         div.mt-4.mx-3(v-for="(item, index) in content.form")
             v-text-field(v-if="edit", v-model="item.title", single-line, label="Titulo")
             v-layout(v-else, justify-space-between)
-                .title {{ item.title }}
+                h2.ps {{ item.title }}
                 v-chip(v-if="admin", color="blue lighten-1", small) <b>Media: {{ Math.floor(getSum(item.options) / item.count * 100)/100 }}</b>
             div(v-if="!edit && admin")
                 v-layout(align-center)
@@ -67,12 +67,6 @@ export default {
         "admin"
     ],
 
-    computed: {
-        edit() {
-            return this.$store.state.page.edit
-        }
-    },
-
     methods: {
         add() {
             if (typeof this.content.form == 'undefined') {
@@ -122,6 +116,10 @@ export default {
     },
 
     computed: {
+        edit() {
+            return this.$store.state.page.edit
+        },
+        
         totalMean() {
             if (typeof this.content.form == 'undefined') return 0
             let sum = 0

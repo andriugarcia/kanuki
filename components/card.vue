@@ -12,6 +12,7 @@
           h1.ps.white--text {{ title }}
           p.white--text {{ description }}
 
+
 </template>
 
 <script>

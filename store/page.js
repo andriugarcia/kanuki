@@ -257,6 +257,7 @@ const page = {
                         Color: subject.Content.Color,
                         Description: subject.Content.Description,
                         PhotoURL: subject.Author.photoURL,
+                        Type: subject.Type,
                         Read: subject.Read,
                         Title: subject.Title,
                         createdAt: subject.createdAt,
@@ -315,8 +316,7 @@ const page = {
         },
 
         deleteElements: async function(context, value) {
-
-            console.log(value.idFather)
+            console.log(value)
             return await value.arrayIndex.forEach(async function(id) {
                 await remove('pages', `${value.idFather}.${id}`)
                 await pull('pages', value.idFather, 'Elements', id)

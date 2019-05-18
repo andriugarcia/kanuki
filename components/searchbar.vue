@@ -83,6 +83,7 @@ export default {
     methods: {
 
         goToSubject(subject) {
+            this.$store.commit('search/searchBarDisable')
             this.$router.push({ path: `/${subject.AuthorId}/${subject.id}/` })
         },
 

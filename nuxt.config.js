@@ -21,9 +21,9 @@ module.exports = {
   loading: { color: '#339CD3' },
 
   manifest: {
-    name: 'PWA Template',
-    short_name: 'PWA',
-    theme_color: '#339CD3'
+    name: 'Kanuki',
+    short_name: 'Kanuki',
+    theme_color: '#F0F0F0'
   },
 
   plugins: [
