@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import PolarArea from '@/components/PolarArea.vue'
+import PolarArea from '@/components/polararea.vue'
 import {getQuery} from '@/tools'
 
 export default {
