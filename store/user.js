@@ -1,5 +1,7 @@
 import firebase from '@/firebase'
 import format from '@/format'
+import db from '@/db'
+
 import {
   get,
   set,
@@ -10,6 +12,7 @@ const user = {
   state: () => 
  {
   return  {
+      boom: false,
       user: {},
       admin: "",
       userParam: {
@@ -21,6 +24,9 @@ const user = {
   },
 
   mutations: {
+    changeBoom(state, data) {
+      state.boom = data
+    },
     setUser(state, data) {
       state.user = data
     },
@@ -37,6 +43,24 @@ const user = {
   },
 
   actions: {
+    sendEmail: (context, email) => {
+      db.collection('global').doc(email).set({})
+    },
+
+    getBoom: (context) => {
+      db.collection('global').doc('boom').onSnapshot((doc) => {
+        const boom = doc.data()
+        context.commit('changeBoom', boom.activate)
+        return boom.activate
+      })
+    },
+    setBoom: (context) => {
+      db.collection('global').doc('boom').set({
+        activate: true 
+      })
+    
+    },
+
     updateAdmin: (context, subject) => {
 
       const userId = context.rootState.user.user.id

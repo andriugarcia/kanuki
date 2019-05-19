@@ -18,18 +18,18 @@
                 div(style="border-top: 100px solid #ff6384; width: 360px; border-right: 60px solid transparent; border-left: 60px solid transparent")
                     h1.ps(style="margin-top: -70px; width: 100%; text-align: center") TAM
                     v-layout(justify-center, style="margin-top: 40px")
-                        h2.ps {{ Math.floor((content.tam - content.sam) / content.tam * 1000)/10}}%
+                        h2.ps {{ Math.floor((content.sam / content.tam * 100))}}%
                 div(style="border-top: 100px solid #f1d027; width: 240px; border-right: 60px solid transparent; border-left: 60px solid transparent")
                     h1.ps(style="margin-top: -70px; width: 100%; text-align: center") SAM
                     v-layout(justify-center, style="margin-top: 40px")
-                        h2.ps {{ Math.floor((content.sam - content.som) / content.sam * 1000)/10}}%
+                        h2.ps {{ Math.floor((content.som / content.sam) * 100)}}%
                 div(style="border-top: 100px solid #4f9cd1; width: 100px; border-right: 60px solid transparent; border-left: 60px solid transparent")
                     v-layout(justify-center, style="margin-top: -100px")
                         h1.ps SOM
             v-layout.ml-3(column, justify-space-around)
-                h2.font-weight-light <b>TAM</b> {{ content.tam }} - {{ content.tamDescription }}
-                h2.font-weight-light <b>SAM</b> {{ content.sam }} - {{ content.samDescription }}
-                h2.font-weight-light <b>SOM</b> {{ content.som }} - {{ content.somDescription }}
+                h2.font-weight-light <b>TAM:</b> {{ content.tam }} - {{ content.tamDescription }}
+                h2.font-weight-light <b>SAM:</b> {{ content.sam }} - {{ content.samDescription }}
+                h2.font-weight-light <b>SOM:</b> {{ content.som }} - {{ content.somDescription }}
 </template>
 
 <script>

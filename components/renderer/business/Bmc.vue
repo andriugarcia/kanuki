@@ -4,50 +4,50 @@
             v-flex.ma-1(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 18%;' : 'width: 100%;'")
                 v-card.pa-2.elevation-5(style="height: 100%")
                     p.font-weight-bold(style="text-align: center") Aliados Clave
-                    .ma-3(v-if="!edit", style="font-size: .8em") {{ content.keyPartners }}
+                    p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.keyPartners }}
                     v-textarea(v-else, style="font-size: .8em", v-model="content.keyPartners", single-line, auto-grow)
             div(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 18%' : 'width: 100%'")
                 v-flex.ma-1
                     v-card.pa-2.elevation-5(style="height: 100%")
                         p.font-weight-bold(style="text-align: center") Actividades Clave
-                        .ma-3(v-if="!edit", style="font-size: .8em") {{ content.keyActivities }}
+                        p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.keyActivities }}
                         v-textarea(v-else, style="font-size: .8em", v-model="content.keyActivities", single-line, auto-grow)
                 v-flex.ma-1
                     v-card.pa-2.elevation-5(style="height: 100%")
                         p.font-weight-bold(style="text-align: center") Recursos Clave
-                        .ma-3(v-if="!edit", style="font-size: .8em") {{ content.keyResources }}
+                        p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.keyResources }}
                         v-textarea(v-else, style="font-size: .8em", v-model="content.keyResources", single-line, auto-grow)
             v-flex.ma-1(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 18%' : 'width: 100%'")
                 v-card.pa-2.elevation-5(style="height: 100%")
                     p.font-weight-bold(style="text-align: center") Propuesta de Valor
-                    .ma-3(v-if="!edit", style="font-size: .8em") {{ content.valuePropositions }}
+                    p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.valuePropositions }}
                     v-textarea(v-else, style="font-size: .8em", v-model="content.valuePropositions", single-line, auto-grow)
             div(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 18%' : 'width: 100%'")
                 v-flex.ma-1
                     v-card.pa-2.elevation-5(style="height: 100%")
                         p.font-weight-bold(style="text-align: center") Relación Clientes
-                        .ma-3(v-if="!edit", style="font-size: .8em") {{ content.customerRelationships }}
+                        p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.customerRelationships }}
                         v-textarea(v-else, style="font-size: .8em", v-model="content.customerRelationships", single-line, auto-grow)
                 v-flex.ma-1
                     v-card.pa-2.elevation-5(style="height: 100%")
                         p.font-weight-bold(style="text-align: center") Canales
-                        .ma-3(v-if="!edit", style="font-size: .8em") {{ content.channels }}
+                        p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.channels }}
                         v-textarea(v-else, style="font-size: .8em", v-model="content.channels", single-line, auto-grow)
             v-flex.ma-1(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 18%' : 'width: 100%'")
                 v-card.pa-2.elevation-5(style="height: 100%")
                     p.font-weight-bold(style="text-align: center") Segmento de clientes
-                    .ma-3(v-if="!edit", style="font-size: .8em") {{ content.customerSegments }}
+                    p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.customerSegments }}
                     v-textarea(v-else, style="font-size: .8em", v-model="content.customerSegments", single-line, auto-grow)
         v-layout(justify-center, wrap).px-2
             v-flex.ma-1(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 40%' : 'width: 100%'")
                 v-card.pa-2.elevation-5
                     p.font-weight-bold(style="text-align: center") Estructura de Costes
-                    .ma-3(v-if="!edit", style="font-size: .8em") {{ content.costStructure }}
+                    p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.costStructure }}
                     v-textarea(v-else, style="font-size: .8em", v-model="content.costStructure", single-line, auto-grow)
             v-flex.ma-1(:style="($vuetify.breakpoint.lgAndUp) ? 'width: 40%' : 'width: 100%'")
                 v-card.pa-2.elevation-5
                     p.font-weight-bold(style="text-align: center") Flujo de ingresos
-                    .ma-3(v-if="!edit", style="font-size: .8em") {{ content.revenueStreams }}
+                    p.ma-1(v-if="!edit", style="font-size: .75em; white-space: pre-line; text-align: center;") {{ content.revenueStreams }}
                     v-textarea(v-else, style="font-size: .8em", v-model="content.revenueStreams", single-line, auto-grow)
 </template>
 

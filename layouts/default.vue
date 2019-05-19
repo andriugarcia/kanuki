@@ -112,6 +112,30 @@
           .ps.white--text(style="font-size: 3em") Error
           .headline.ps.white--text Ya existe una página con este nombre
     create-subject(v-if="drawer && user.id", style="z-index: 15")
+    v-dialog(v-model="boom")
+      v-card.pa-3
+        v-layout(column, align-center)
+          h1.ps.align-center ¡Muchas gracias por tu atención!
+          v-layout.ma-3(align-center)
+            div.mr-5
+              div(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+              div.mt-3.ml-4(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+            div
+              .ps.font-weight-light.align-center ¿Te gustaría participar o informarte de Kanuki?
+              .ps.font-weight-bold.align-center Escribenos tu mail para contactar
+              v-text-field.my-2(label="Correo Electronico", v-model="emailNewsletter")
+            div.ml-5(style="transform: rotate(180deg)")
+              div(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+              div.mt-3.ml-4(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+          v-btn(:color="thanks ? 'green' : 'cardyellow'", large, @click="addMail") {{thanks ? 'Gracias' : '¡Quiero participar!'}}
 
 </template>
 
@@ -139,6 +163,9 @@
 
     data () {
       return {
+        thanks: false,
+        preboom: false,
+        emailNewsletter: '',
         search: false,
         drawer: this.$vuetify.breakpoint.mdAndUp,
         usernameInput: "", // Text field de Registro
@@ -157,9 +184,29 @@
         if (getQuery('search')) {
             this.search = true
         }
+
+        if (getQuery('boom')) {
+          console.log("BOOOOOOM")
+          this.$store.dispatch('user/setBoom')
+        }
+
+        this.$store.dispatch('user/getBoom')
     },
 
     computed: {
+
+      boom: {
+        get() {
+          if (this.preboom) {
+            return false
+          }
+
+          return this.$store.state.user.boom
+        },
+        set(value) {
+          this.preboom = true
+        }
+      },
 
       errorAlert() {
         return this.$store.state.error.errorAlert
@@ -210,6 +257,13 @@
     },
 
     methods: {
+      addMail() {
+        this.thanks = true
+        this.$store.dispatch('user/sendEmail', this.emailNewsletter).then(() => {
+          setTimeout(() => {this.preboom = true}, 2000)
+          
+        })
+      },
 
       auth() {
         this.$store.dispatch('user/auth')
