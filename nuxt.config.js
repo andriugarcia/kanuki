@@ -14,6 +14,10 @@ module.exports = {
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1'
+      },
+      {
+        name: 'google',
+        content: "notranslate"
       }
     ]
   },
@@ -90,7 +94,7 @@ module.exports = {
     ['nuxt-i18n', {
       seo: false,
       locales: ['en', 'es'],
-      defaultLocale: 'en',
+      defaultLocale: 'es',
       vueI18n: {
         messages: {
           en: require('./locales/en.json'),

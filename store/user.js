@@ -34,6 +34,10 @@ const user = {
     setUserParam(state, data) {
       state.userParam = data
     },
+
+    setAdmin(state, data) {
+      state.admin = data
+    }
   },
 
   getters: {
@@ -54,9 +58,9 @@ const user = {
         return boom.activate
       })
     },
-    setBoom: (context) => {
+    setBoom: (context, boom) => {
       db.collection('global').doc('boom').set({
-        activate: true 
+        activate: boom == 'true' ? true : false 
       })
     
     },
@@ -65,13 +69,13 @@ const user = {
 
       const userId = context.rootState.user.user.id
       if (subject.Admins[userId]) {
-        context.state.admin = 'super'
+        context.commit('setAdmin', 'super')
         if (subject.Read == 'admins') {
           context.commit('subject/setSubjectParam', subject)
         }
       }
       else {
-        context.state.admin = 'admin'
+        context.commit('setAdmin', 'admin')
       }
 
     },
@@ -139,7 +143,7 @@ const user = {
         } else {
           context.commit('setUser', {})
           context.dispatch("search/fetchHomePosts", '', {root:true})
-          context.state.admin = ""
+          context.commit('setAdmin', "")
           context.commit('setUser', {})
           context.commit('subject/setPublications', [], {root:true})
           context.commit('subject/setSaved', [], {root:true})

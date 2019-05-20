@@ -1,9 +1,9 @@
 <template lang="pug">
     #form.pa-3
-        v-layout(v-if="admin", align-center)
+        v-layout(v-if="admin && !edit", align-center)
             v-subheader Total encuestados: 
             v-chip(color="blue", dark) {{ maxCount }}
-        v-layout.pa-1.mb-3(v-if="admin", justify-space-around, wrap)
+        v-layout.pa-1.mb-3(v-if="admin && !edit", justify-space-around, wrap)
             v-card.pa-3.my-2(flat, color="blue")
                 .title Media Total
                 .headline {{ totalMean }}
@@ -14,7 +14,7 @@
                 .title Peor puntuación
                 p {{ limits[0] }}
         div.mt-4.mx-3(v-for="(item, index) in content.form")
-            v-text-field(v-if="edit", v-model="item.title", single-line, label="Titulo")
+            v-text-field(v-if="edit", v-model="item.title", single-line, label="Titulo", append-icon="close", @click:append="remove(index)")
             v-layout(v-else, justify-space-between)
                 h2.ps {{ item.title }}
                 v-chip(v-if="admin", color="blue lighten-1", small) <b>Media: {{ Math.floor(getSum(item.options) / item.count * 100)/100 }}</b>
@@ -40,7 +40,7 @@
                     v-progress-linear(color="purple darken-1", height="15", :value="item.options[4]*20")
                     v-chip(small, color="gray lighten-1") {{ item.options[4] }}
 
-            v-radio-group(v-if="!edit && !admin", v-model="options[index]", row).ml-3
+            v-radio-group(v-if="!edit && !admin", v-model="options[index]", row)
                 v-radio(label="1", value="1")
                 v-radio(label="2", value="2")
                 v-radio(label="3", value="3")
@@ -48,6 +48,8 @@
                 v-radio(label="5", value="5")
         v-layout(v-if="edit", justify-center)
             v-btn(v-if="edit", round, color="green", dark, large, @click="add") Nuevo
+            v-btn(v-if="edit", round, color="red darken-1", dark, large, @click="reset") Reiniciar
+
 </template>
 
 <script>
@@ -76,6 +78,21 @@ export default {
                 title: "",
                 options: [0,0,0,0,0],
                 count: 0
+            })
+        },
+
+        remove(index) {
+            this.content.form.splice(index, 1)
+        },
+
+        reset() {
+            this.content.form.forEach(item => {
+                item.options[0] = 0
+                item.options[1] = 0
+                item.options[2] = 0
+                item.options[3] = 0
+                item.options[4] = 0
+                item.count = 0
             })
         },
 

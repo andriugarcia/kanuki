@@ -33,7 +33,7 @@
                         v-icon arrow_back
                     v-spacer
                     v-menu(v-model="pagemenu", :close-on-content-click="false", :nudge-width="70", offset-y)
-                        v-btn(slot="activator", flat) {{ $t("page") }}{{ this.pageIndex + 1 }}
+                        v-btn(slot="activator", flat) {{ $t("page") }}{{ pageIndex + 1 }}
                         v-card
                             v-list
                                 v-list-tile(v-for="(pag, index) in father.Content.Elements", :key="index", @click.native="goToPage(pag.id)")
@@ -108,7 +108,7 @@
                         v-icon arrow_back
                     v-spacer
                     v-menu(v-model="pagemenu2", :close-on-content-click="false", :nudge-width="70", offset-y)
-                        v-btn(slot="activator", flat) {{ $t("page") }}{{ this.pageIndex + 1 }}
+                        v-btn(slot="activator", flat) {{ $t("page") }}{{ pageIndex + 1 }}
                         v-card
                             v-list
                                 v-list-tile(v-for="(pag, index) in father.Content.Elements", :key="index", @click.native="goToPage(pag.id)")
@@ -290,7 +290,7 @@ export default {
         let data = await store.dispatch('page/getPage', path)
 
 
-        var index
+        var pageIndex
         var leftDisabled
         var rightDisabled
         var backId
@@ -304,18 +304,18 @@ export default {
                 return pag.Read == 'public'
             })
 
-            index = pages.findIndex(x => x.id == data.page.id)
+            pageIndex = pages.findIndex(x => x.id == data.page.id)
     
-            leftDisabled = (index <= 0) ? true : false
-            rightDisabled = (index + 1 >= pages.length) ? true : false
+            leftDisabled = (pageIndex <= 0) ? true : false
+            rightDisabled = (pageIndex + 1 >= pages.length) ? true : false
 
     
             if (!leftDisabled) {
-                backId = pages[index - 1].id
+                backId = pages[pageIndex - 1].id
             }
     
             if (!rightDisabled) {
-                nextId = pages[index + 1].id
+                nextId = pages[pageIndex + 1].id
             }
         }
         
@@ -324,7 +324,7 @@ export default {
             subject: data.subject, 
             father: data.father,
             page: data.page,
-            index,
+            pageIndex,
             leftDisabled,
             rightDisabled,
             backId,

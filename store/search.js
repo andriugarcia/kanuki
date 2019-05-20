@@ -73,7 +73,7 @@ const searchModule = {
           } else {
             search.def(0, 30, 'Saves', 'desc').then(function (body) {
               var hits = body.hits.hits;
-              context.state.homePosts = hits
+              context.commit('setHomePosts', hits)
               console.log("Hits 2", hits)
             }, function (error) {
               // console.trace(error.message);

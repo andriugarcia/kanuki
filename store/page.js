@@ -50,6 +50,10 @@ const page = {
 
         setDeleteElementList(state, data) {
             state.deleteElementList = data
+        },
+
+        setErrorSubject(state, data) {
+            state.errorSubject = data
         }
     },
 
@@ -58,6 +62,7 @@ const page = {
         getPageSnapshot: function (context, id) {
             return db.collection('pages').doc(id)
                 .onSnapshot((doc) => {
+                    console.log(doc.data())
                     context.commit('setPage', doc.data())
                 })
         },
@@ -264,10 +269,10 @@ const page = {
                         id: subject.id,
                     })
                 } else {
-                    context.state.errorSubject = true
-
+                    context.commit('setErrorSubject', true)
+                    
                     setTimeout(() => {
-                        context.state.errorSubject = false
+                        context.commit('setErrorSubject', false)
                     }, 4000)
                 }
             })

@@ -112,29 +112,29 @@
           .ps.white--text(style="font-size: 3em") Error
           .headline.ps.white--text Ya existe una página con este nombre
     create-subject(v-if="drawer && user.id", style="z-index: 15")
-    v-dialog(v-model="boom")
+    v-dialog(v-model="boom", width="500")
       v-card.pa-3
         v-layout(column, align-center)
-          h1.ps.align-center ¡Muchas gracias por tu atención!
+          h1.ps(style="text-align: center") ¡Muchas gracias por tu atención!
           v-layout.ma-3(align-center)
-            div.mr-5
-              div(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #ff6384")
-              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #1e88e5")
-              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
-              div.mt-3.ml-4(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #1e88e5")
-              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #ff6384")
-              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+            div.mr-2
+              div(style="width: .6em; height: 1.2em; transform: rotate(45deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-5(style="width: .6em; height: 1.2em; transform: rotate(105deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-2(style="width: .6em; height: 1.2em; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+              div.mt-3.ml-4(style="width: .6em; height: 1.2em; transform: rotate(45deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-5(style="width: .6em; height: 1.2em; transform: rotate(105deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-2(style="width: .6em; height: 1.2em; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
             div
-              .ps.font-weight-light.align-center ¿Te gustaría participar o informarte de Kanuki?
-              .ps.font-weight-bold.align-center Escribenos tu mail para contactar
-              v-text-field.my-2(label="Correo Electronico", v-model="emailNewsletter")
-            div.ml-5(style="transform: rotate(180deg)")
-              div(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #ff6384")
-              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #1e88e5")
-              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
-              div.mt-3.ml-4(style="width: 10px; height: 20px; transform: rotate(45deg); border-radius: 4px; background-color: #1e88e5")
-              div.ml-5(style="width: 10px; height: 20px; transform: rotate(105deg); border-radius: 4px; background-color: #ff6384")
-              div.ml-2(style="width: 10px; height: 20px; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+              .ps.font-weight-light(style="text-align: center") ¿Te gustaría participar o informarte de Kanuki?
+              .ps.font-weight-bold(style="text-align: center") Escribenos tu mail para contactar
+            div.ml-2(style="transform: rotate(180deg)")
+              div(style="width: .6em; height: 1.2em; transform: rotate(45deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-5(style="width: .6em; height: 1.2em; transform: rotate(105deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-2(style="width: .6em; height: 1.2em; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+              div.mt-3.ml-4(style="width: .6em; height: 1.2em; transform: rotate(45deg); border-radius: 4px; background-color: #1e88e5")
+              div.ml-5(style="width: .6em; height: 1.2em; transform: rotate(105deg); border-radius: 4px; background-color: #ff6384")
+              div.ml-2(style="width: .6em; height: 1.2em; transform: rotate(30deg); border-radius: 4px; background-color: #f1d027")
+          v-text-field.my-2(label="Correo Electronico", v-model="emailNewsletter", style="width: 100%")
           v-btn(:color="thanks ? 'green' : 'cardyellow'", large, @click="addMail") {{thanks ? 'Gracias' : '¡Quiero participar!'}}
 
 </template>
@@ -181,13 +181,10 @@
     },
 
     mounted() {
-        if (getQuery('search')) {
-            this.search = true
-        }
 
         if (getQuery('boom')) {
           console.log("BOOOOOOM")
-          this.$store.dispatch('user/setBoom')
+          this.$store.dispatch('user/setBoom', getQuery('boom'))
         }
 
         this.$store.dispatch('user/getBoom')
