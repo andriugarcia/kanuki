@@ -229,10 +229,14 @@ const page = {
                 id = page.id
             }
 
-            console.log(title)
             page.Title = title
             page.id = id
-            console.log(page)
+            
+            var lastIndex = page.url.lastIndexOf("/");
+
+            page.url = page.url.substring(0, lastIndex) + '/' + id
+
+            console.log("url:", page.url)
 
             context.commit('setOldTitle', title)
             

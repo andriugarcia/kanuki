@@ -63,7 +63,7 @@
                                     v-btn(color="error", @click="deletePage") {{ $t("delete") }}
                         span {{ $t('deleteSubject') }}
 
-                v-toolbar(flat, style="z-index: 5")
+                v-toolbar(flat, style="z-index: 3")
                     v-btn(v-if="page.Author.id", flat, light, small, @click="goToAuthor")
                         v-avatar.mr-1(size="28")
                             img(:src="page.Author.photoURL")
