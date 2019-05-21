@@ -159,7 +159,7 @@ import SubjectSettings from '@/components/subjectSettings.vue'
 import ChangeRead from '@/components/changeRead.vue'
 import DownloadButton from '@/components/downloadButton.vue'
 
-import {getQuery, getPathArray, getPathFather} from '@/tools'
+import {getQuery, getPathArray, getPathFather, removeDoubleChar} from '@/tools'
 import shareButton from '@/components/shareButton.vue'
 import format from '@/format'
 import Rightbar from '@/components/rightbar.vue'
@@ -276,12 +276,7 @@ export default {
     async asyncData({store, params}) {
         let path = `${params.user}/${params.pathMatch}`
         
-        for (let i = 1; i < path.length; i++) {
-            if (path[i] == '/' && path[i] == path[i-1]) {
-                path = path.slice(0, i) + path.slice(i+1)
-                break;
-            }
-        }
+        path = removeDoubleChar(path, '/')
 
         if (path[path.length - 1] == '/') {
             path = path.substr(0, path.length - 1)
@@ -574,9 +569,31 @@ export default {
             this.pagemenu2 = false
             this.$router.replace({ path: idPage })
         },
+    },
 
+    watch: {
+    '$route': {
+        handler() {
+            let id = `${this.$route.params.user}/${this.$route.params.pathMatch}`
+            const self = this
 
+            id = removeDoubleChar(id, '/')
+
+            if (id[id.length - 1] == '/') {
+                id = id.substr(0, id.length - 1)
+            }
+
+            console.log('SNAP')
+            console.log(id)
+            db.collection('pages').doc(id.replace(/\//g, "."))
+                .onSnapshot(function(doc) {
+                    console.log(doc)
+                    self.page = doc.data()
+                })
+        },
+        deep: true
     }
+}
 }
 </script>
 

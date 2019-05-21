@@ -12,6 +12,18 @@ let getAccess = function(subject, userId) {
     }
 }
 
+let removeDoubleChar = function(str, char) {
+
+    for (let i = 1; i < str.length; i++) {
+        if (str[i] == char && str[i] == str[i - 1]) {
+            str = str.slice(0, i) + str.slice(i + 1)
+            break;
+        }
+    }
+
+    return str
+}
+
 let getPathArray = function (path) {
     return path.split("/")
 }
@@ -164,5 +176,6 @@ export {
     getIcon,
     getCardColor,
     getPathArray,
-    getPathFather
+    getPathFather,
+    removeDoubleChar
 }
