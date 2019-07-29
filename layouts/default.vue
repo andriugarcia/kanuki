@@ -207,6 +207,10 @@
 
     beforeMount() {
       this.$store.dispatch('user/getCurrentUser')
+
+      console.log('%c Kanuki %c Utiliza la instrucción test(t) para utilizar el script de test de Vuex', 'padding: 6px; border-radius: 4px; background-color: #cacaca; margin: 8px;', 'padding: 8px; color: white; border-radius: 12px; background-color: #4f9cd1; font-family: monospace')
+      window.t = this.$store
+      window.test = test
     },
 
     methods: {
